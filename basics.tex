@@ -1,0 +1,177 @@
+\section{Basics}
+
+
+
+\subsection{Basics}
+
+Michael (1997) defines machine learning:
+\begin{enumerate}
+    \item learn from experience $E$
+    \item tasks $T$
+    \item performance measure $P$
+\end{enumerate}
+
+So a machine learning process performs $T$, measure by $P$, improve $E$.
+
+
+The steps to define a machine learning project:
+\begin{enumerate}
+    \item hypothesis: $h_\theta ( \selectrow{x}{i} ) = \theta_0 + \theta_1 \selectrow{x}{i}$
+    \item parameter: $\theta = \set{\theta_0, \theta_1}$
+    \item cost function: $\displaystyle J(\theta, x) = \frac{1}{2m} \sum_{i=1}^m \left( h_\theta  \left(\selectrow{x}{i}\right) - \selectrow{y}{i} \right)^2$
+    \item goal: $\displaystyle \argmin{\theta}  J(\theta,x)$
+\end{enumerate}
+
+We need to pay attention to the difference between hypothesis and cost function:
+\begin{enumerate}
+    \item Hypothesis is a function of $x$
+    \item Cost function is a function of $\theta$
+\end{enumerate}
+
+Gradient descent:
+\begin{equation}
+    \theta_{j+1} = \theta_j - \alpha  \cdot \dpd{J(\theta, x)}{\theta_j}
+\end{equation}
+Here $\alpha$ is the learning rate.
+
+
+The range of linear regression is $(\infty, -\infty)$ so it is not good for binary classification. Logistic regression is better for binary classification because its range is $(0, 1)$. Its definition is 
+\begin{equation}
+    h_\theta(x) = \frac{1}{1 + e^{- \transpose{\theta} x}}
+\end{equation}
+
+$\displaystyle h_\theta(x) = \frac{1}{1 + e^{- \transpose{\theta} x}}$ is called sigmoid activation function.
+
+regularization will add $g(\theta)$ to $J(\theta)$.
+
+Logistic regression is a classification, not regression. The result of logistic regression is a probability that $\mathbb{P}(y = 1 | x, \theta)$. So $y = 1$ when $\transpose{\theta} x > 0$.
+
+The cost function of logistic regression is carefully engineered. It is derived from maximal likelihood calculation:
+\begin{equation}
+    J(\theta,x) = -y \log \left(h_\theta (x) \right) - (1-y) \log \left(1 - h_\theta (x)\right)
+\end{equation}
+
+The gradient descent function is:
+\begin{equation}
+    \theta_{j+1} = \theta_j - \alpha  \cdot \sum_{i=1}^m \left( h_\theta (\selectrow{x}{i}) - \selectrow{y}{i} \right) \selectrowandcolumn{x}{i}{j}
+\end{equation}
+
+The gradient function for linear regression and logistic regression are almost the same. the only difference is that:
+\begin{enumerate}
+    \item $h_\theta(x) = \transpose{\theta} x$ for linear regression
+    \item $\displaystyle h_\theta (x) = \frac{1}{1 + e^{- \transpose{\theta} x}}$ for logistic regression
+\end{enumerate}
+
+For one-vs-all classification, we define $n$ hypothesis $\selectrow{h_\theta}{i}$, and choose $\argmax{i} \selectrow{h_\theta}{i}$.
+
+
+
+For neural networks, the output from layer $j$ is 
+\begin{equation}
+    x = \begin{pmatrix}
+        1 \\
+        x_1 \\
+        x_2 \\
+        \vdots \\
+        x_m
+    \end{pmatrix}_{m+1}
+\end{equation}
+
+So the input from layer $j$ is a vector of dimension $m+1$. The first element is called bias unit which is always $1$.
+
+The input to layer $j+1$ is a vector $y$ with dimension $n$ (exclude the first bias unit). We have the relation:
+\begin{equation}
+    y = \theta x
+\end{equation}
+
+Of which $\theta$ is a matrix with dimension ${(m+1) \times n}$.
+
+After the linear transformation of $x$, the neuron will then apply an activation function $g$ to $y$. So the result is an out put vector with dimension $n$ (exclude the bias unit):
+\begin{equation}
+    \begin{pmatrix}
+        g\left(\selectrow{y}{1}\right) \\
+        g\left(\selectrow{y}{2}\right) \\
+        \vdots \\
+        g\left(\selectrow{y}{n}\right)
+    \end{pmatrix}_n
+\end{equation}
+
+So the process of one forward propagation is:
+\begin{equation}
+    x = \begin{pmatrix}
+        1 \\
+        x_1 \\
+        x_2 \\
+        \vdots \\
+        x_m
+    \end{pmatrix}_{m+1} \xrightarrow{\theta_{(m+1) \times n}} y = \theta x \xrightarrow{g} \begin{pmatrix}
+        g\left(\selectrow{y}{1}\right) \\
+        g\left(\selectrow{y}{2}\right) \\
+        \vdots \\
+        g\left(\selectrow{y}{n}\right)
+    \end{pmatrix}_n
+\end{equation}
+
+
+For multi-class classification, the $y$ need to use one-hot encoding.
+
+
+For one neural network, the cost function with regularization is:
+\begin{equation}
+    \begin{aligned}
+        J(\theta) =& -\frac{1}{m} \left[\sum_{i=1}^m \sum_{k=1}^K \selectrowandcolumn{y}{i}{k} \log \left( h_\theta (\selectrow{x}{i}) \right)_k + (1-\selectrowandcolumn{y}{i}{k}) \log \left( 1- h_\theta (\selectrow{x}{i}) \right)_k \right] \\
+        &+ \frac{\lambda}{2m} \sum_{l=1}^{L-1} \sum_{i=1}^{S_l} \sum_{j=1}^{S_{l+1}} \left( \selectrowandcolumn{\theta}{l}{ij} \right)^2
+    \end{aligned}
+\end{equation}
+
+Of which:
+\begin{enumerate}
+    \item $\log \left( h_\theta (\selectrow{x}{i}) \right)_k$: the $k$th output
+    \item $L$: the number of total layer
+    \item $S_l$: the dimension of layer $l$
+    \item $K$: the dimension of last layer, the multi-class classification
+    \item $m$: the total number of input vectors
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
