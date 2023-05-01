@@ -61,6 +61,8 @@ Because convolution flipped the calculation (one is $0 \rightarrow m$, and the o
     \begin{equation}
         z_{i,j,d} = b_d + \sum_{u=0}^{H-1} \sum_{v=0}^{W-1} \sum_{c=0}^{C-1} w_{0,0,c,d} x_{i+u,j+v,c}
     \end{equation}
+    
+    $1 \times 1$ convolution could change the number of channel or feature without change the channel shape.
 \end{example}
 
 

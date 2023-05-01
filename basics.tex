@@ -113,7 +113,7 @@ Affine transformation could be used in regression, which is called linear regres
 \end{definition}
 
 
-\section{Training}
+\section{Model Valuation}
 
 \begin{definition}[Population Risk]
     Assume we know the true distribution of $p^*(x,y)$. The population risk is
@@ -138,9 +138,9 @@ Affine transformation could be used in regression, which is called linear regres
 
 Assume we could choose $f_k$ from $\set{f_1, f_2, \cdots, f_K}$, we have
 \begin{enumerate}
-    \item $\mathcal{D}_{\text{train}}$ is used to select $\theta$ that $\argmin{\theta}(f_k(x;\theta))$
-    \item $\mathcal{D}_{\text{test}}$ is used to calculate generalization error $\mathcal{D}_{\text{test}} - \mathcal{D}_{\text{train}}$
-    \item $\mathcal{D}_{\text{validation}}$ is used to select $k$ that $\argmin{k}(\mathcal{D}_{\text{test}} - \mathcal{D}_{\text{train}})$
+    \item $\mathcal{D}_{\text{train}}^k$ is used to select $\theta$ that $\argmin{\theta}(f_k(x;\theta))$
+    \item $\mathcal{D}_{\text{test}}^k$ is used to calculate generalization error $\mathcal{D}_{\text{test}}^k - \mathcal{D}_{\text{train}}^k$
+    \item $\mathcal{D}_{\text{validation}}^{\hat{k}}$ is used to select $\hat{k}$ that $\argmin{k}(\mathcal{D}_{\text{test}}^k - \mathcal{D}_{\text{train}})^k$
 \end{enumerate}
 
 

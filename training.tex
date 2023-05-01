@@ -167,6 +167,10 @@ Dropout will set the output of hidden layer to zero based on Bernoulli noise $1-
     \item $p= 0.25$ for input layer
 \end{enumerate}
 
+Dropout is usually used in fully-connected hidden layers. It does not change the weight or bias. 
+
+
+
 What it does it to add noise to $x$ to create $x^{'}$ so $\expectation{x^{'}}= x$. So we need to change the weight during training:
 \begin{equation}
     \begin{aligned}
@@ -177,7 +181,6 @@ What it does it to add noise to $x$ to create $x^{'}$ so $\expectation{x^{'}}= x
     \end{aligned}
 \end{equation}
 
-Dropout is usually used in fully-connected hidden layers. It does not change the weight or bias. 
 
 It is only used in training.
 
