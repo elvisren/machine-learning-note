@@ -204,7 +204,7 @@ LSTM is often initialized with $\selectrow{c}{0} = \selectrow{h}{0} = 0$.
 
 \subsection{Encoder Decoder}
 
-it maps fixed-length input to fixed length output, the length is different.
+it maps fixed-length input to a different length output.
 
 the encoder is a stack of recurrent unit. the output is a vector of hidden state
 \begin{equation}
@@ -225,10 +225,11 @@ the problem with encoder-decoder are:
 \end{itemize}
 These problems make it difficult to learn long sentences and slow to learn.
 
+Because the model takes output as input, it is also called \emph{auto-regressive}.
 
 \subsection{Attention}
 
-Attention optimize encoder-decoder by allowing decoder to access all encoder's hidden status.
+Attention optimize encoder-decoder by allowing decoder to access all encoder's hidden status. It effectively pass information from encoder to decoder.
 
 \begin{figure}[H]
 \includegraphics[width=0.8\textwidth]{pic/04/attention.jpeg}
@@ -297,7 +298,7 @@ For a batch of query $Q$, the calculation could be expressed in vector form:
 \begin{definition}[Multi-headed Attention]
     Multi-head Attention is a module for attention mechanisms which runs through an attention mechanism several times in parallel. The independent attention outputs are then concatenated and linearly transformed into the expected dimension.
     
-    Intuitively, multiple attention heads allows for attending to parts of the sequence differently (e.g. longer-term dependencies versus shorter-term dependencies).
+    Intuitively, multiple attention heads allows for attending to parts of the sequence differently (e.g. longer-term dependencies versus shorter-term dependencies). This is the same as the multiple feature technique used in CNN.
 
 \begin{figure}[H]
 \includegraphics[width=0.3\textwidth]{pic/04/multi-headed-attention.png}
@@ -331,10 +332,15 @@ For a batch of query $Q$, the calculation could be expressed in vector form:
 \end{definition}
 
 
+Transformer used encoder-decoder architecture. In training time, the destination data will be shifted to the right and then feed into the output channel. In prediction time there is no input to the output channel.
 
+The first layer is embedding layer, which change from a word into a vector.
 
+The first layer of output channel is masked multi-headed attention. Because the output of attention could access all input and improper for output of time $t$ to see input after time $t$, there is a mask on input data to avoid seeing too much.
 
+the self-attention layer will learn all the information in input. Because each output of the self-attention layer contains all information, we could apply MLP on top of each vector. In RNN, the information is passed from previous input to another, which self-attention aggregate all information at once.
 
+another challenge is the order of time. in RNN, there is a natural order because next one depends on previous one. For self-attention, all information were processed at once and there is no order information. 
 
 
 
